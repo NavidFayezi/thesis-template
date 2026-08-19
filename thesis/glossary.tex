@@ -1,0 +1,38 @@
+%%% List of acronyms and abbreviations
+% To define a new acronym:
+% \newabbreviation{<key>}{<abbreviation>}{<long form>}
+%
+% To make it easier to use, also define a new command with the format:
+% \newcommand{\<key>}{\gls*{<key>}}
+%
+% The * in \gls*{<key>} is to prevent LaTeX from adding hyperlinks if the
+% hyperref package is used.
+%
+% In the text, just use \<key>{}. On the first usage, LaTeX will display the
+% long form followed by the acronym in parenthesis. Then, it will only display
+% the acronym.
+%
+% For the special case where you want the long version later in the text, use
+% the \gls family of commands.
+%%%
+% separate the abbreviations from the acronyms
+\usepackage[automake,nonumberlist,abbreviations,acronyms]{glossaries-extra}
+\makeglossaries
+\usepackage{glossaries-extra}
+
+\newabbreviation{ci}{CI}{Contextual Integrity}
+\newcommand{\ci}{\gls*{ci}\@}
+\newabbreviation{fipps}{FIPPs}{Fair Information Practice Principles}
+\newcommand{\fipps}{\gls*{fipps}\@}
+\newabbreviation{ftc}{FTC}{U.S. Federal Trade Commission}
+\newcommand{\ftc}{\gls*{ftc}\@}
+\newabbreviation{gdpr}{GDPR}{General Data Protection Regulation}
+\newcommand{\gdpr}{\gls*{gdpr}\@}
+\newabbreviation{pii}{PII}{Personally Identifiable Information}
+\newcommand{\pii}{\gls*{pii}\@}
+\newabbreviation{pipeda}{PIPEDA}{the Personal Information Protection and Electronic Documents Act}
+\newcommand{\pipeda}{\gls*{pipeda}\@}
+\newabbreviation{sdk}{SDK}{Software Development Kit}
+\newcommand{\sdk}{\gls*{sdk}\@}
+\newcommand{\sdks}{\glspl*{sdk}\@}
+

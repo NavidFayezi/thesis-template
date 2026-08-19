@@ -1,0 +1,74 @@
+%%%%
+%%%% Generally useful preamble commands
+%%%%
+
+\usepackage{etoolbox}
+\usepackage{xcolor}
+
+%%%%
+%%%% Generally useful commands
+%%%%
+
+\newcommand{\eg}{e.g.,}
+\newcommand{\ie}{i.e.,}
+\newcommand{\etal}{et~al.\@}
+
+%%%%
+%%%% Useful while drafting that are disabled with the toggle
+%%%%
+
+\providetoggle{showNotes}
+\toggletrue{showNotes} % show by default
+
+%%% Boxed Messages
+\newcommand{\showMessage}[3]{%
+	\iftoggle{showNotes}{
+		\begin{center}
+			\begin{minipage}{.95\linewidth}
+				\color{#1!70}\vrule width 3pt%
+				\colorbox{#1!15}{%
+					\parbox{.95\textwidth}{%
+						\textcolor{black}{\small%
+							#2\@: #3%
+						}%
+					}%
+				}%
+			\end{minipage}
+		\end{center}
+	}{}
+}
+
+\newcommand{\todo}[1]{\showMessage{red}{TODO}{#1}}
+\newcommand{\note}[1]{\showMessage{blue}{NOTE}{#1}}
+
+%%% Inline Messages
+\newcommand{\showMessageInline}[3]{%
+	\iftoggle{showNotes}{\textcolor{#1}{#2: #3}}{}%
+}
+
+%%% Create specific instances for comments in the main document
+%\newcommand{\allan}[1]{\showMessageInline{orange}{Allan}{#1}}
+
+% This is to allow hyphenation of \texttt lines (e.g., for package names).
+% Doesn't work perfectly, though
+\renewcommand{\texttt}[1]{%
+	\begingroup
+	\ttfamily
+	\begingroup\lccode`~=`/\lowercase{\endgroup\def~}{/\discretionary{}{}{}}%
+	\begingroup\lccode`~=`[\lowercase{\endgroup\def~}{[\discretionary{}{}{}}%
+	\begingroup\lccode`~=`.\lowercase{\endgroup\def~}{.\discretionary{}{}{}}%
+	\catcode`/=\active\catcode`[=\active\catcode`.=\active
+	\scantokens{#1\noexpand}%
+	\endgroup
+}
+
+%%%%
+%%%% Itemized lists that take up less room
+%%%%
+
+\newenvironment{packed_item}{
+	\begin{itemize}
+		\setlength{\itemsep}{1pt}
+		\setlength{\parskip}{0pt}
+		\setlength{\parsep}{0pt}
+	}{\end{itemize}}

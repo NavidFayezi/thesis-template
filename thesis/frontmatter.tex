@@ -1,0 +1,46 @@
+% !TeX root = frontmatter
+\documentclass[phd-thesis.tex]{subfiles}
+% This file contains the FRONT MATTER other than the title page
+
+\begin{document}
+
+\ifSubfilesClassLoaded{%
+	% include directive when printing this piece separately
+	\frontmatter
+}{}
+
+\chapter{Abstract}
+
+Abstract
+
+\chapter{Preface}
+
+\begin{quote}
+
+Portions of this thesis have been submitted for publication as:
+
+Awesome conference papers somewhere.
+
+\end{quote}
+
+\chapter{Acknowledgements}
+
+It would be impossible to thank the many people who prompted me to start this
+journey and then assisted me along the way---not ``impossible'' as an excuse,
+but impossible because even in retrospect I might not see how someone's action
+or encouragement put me in the position to be a student.
+
+\dedication{Dedication goes here.}
+
+\tableofcontents
+
+\listoftables
+
+\listoffigures
+
+\lstlistoflistings
+
+% only print the abbreviations
+\printabbreviations[title={List of Abbreviations}]
+
+\end{document}

@@ -1,0 +1,23 @@
+%!TeX root = backmatter
+\documentclass[phd-thesis.tex]{subfiles}
+
+\begin{document}
+
+\ifSubfilesClassLoaded{%
+	% include directive when printing this piece separately
+	\backmatter
+}{}
+
+% If we just compile this section, cite all entries
+\ifSubfilesClassLoaded{%
+	\nocite{*}
+	\printbibliography{}
+}{
+	\printbibliography[category=cited]{}
+	\ifdraftdoc
+		\printbibliography[title={Additional references not cited},notcategory=cited]
+	\fi
+}
+
+
+\end{document}

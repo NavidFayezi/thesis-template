@@ -1,0 +1,129 @@
+\documentclass[manuscript,draft]{ucalgmthesis}
+
+\usepackage{adjustbox}
+\usepackage{csquotes}
+\usepackage{datatool}
+\usepackage{dingbat} % for checkmark
+\usepackage[en-CA]{datetime2}
+\usepackage[numbered]{bookmark} % bookmarks in PDF
+\usepackage[shortcuts]{extdash}
+\usepackage{fancyvrb}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{listings}
+\usepackage{mdframed}
+
+% every citation is added to the cited category
+\usepackage[
+	datamodel=acmdatamodel,
+	defernumbers=true,
+	maxcitenames=1,
+	sortcites=true,
+	style=numeric,
+	backend=biber,
+	]{biblatex}
+\DeclareBibliographyCategory{cited}
+\AtEveryCitekey{\addtocategory{cited}{\thefield{entrykey}}}
+\addbibresource{phd-thesis.bib}
+% make sure everything is included, will split later
+\nocite{*}
+
+% Allow URL breaks at any alphanumerical character
+\usepackage{xurl} % load after biblatex to affect the bibliography
+
+%%%% input other parts that belong in the preamble
+\input{preamble}
+% specific inline messages based on preamble
+\newcommand{\mysupervisor}[1]{\showMessageInline{magenta}{Sup}{#1}}
+\newcommand{\myself}[1]{\showMessageInline{orange}{Self}{#1}}
+
+\input{glossary}
+
+%%%% settings when we are in draft mode
+\ifdraftdoc
+	% Set extra numbering depth for outlining purposes.
+	\setsecnumdepth{subsection}
+	\settocdepth{subsection}
+	\toggletrue{showNotes}
+	\makeevenfoot{plain}{\textit{Draft:\DTMtoday}}{\thepage}{\DTMcurrenttime}
+	\makeoddfoot{plain}{\textit{Draft:\DTMtoday}}{\thepage}{\DTMcurrenttime}
+	\makeevenfoot{headings}{\textit{Draft:\DTMtoday}}{}{\DTMcurrenttime}
+	\makeoddfoot{headings}{\textit{Draft:\DTMtoday}}{}{\DTMcurrenttime}
+\else
+	\togglefalse{showNotes}
+\fi
+
+%%%% Further settings for packages
+% listings
+\renewcommand{\lstlistlistingname}{List of Listings}
+\lstset{
+	basicstyle=\fontfamily{pxtt}\selectfont,
+	breaklines=true,		% automatically break long lines
+	captionpos=b,			% captions below the listing
+	keywordstyle=\bfseries,
+	numberbychapter=true,
+	floatplacement=tbp,		% default float placement
+	frame=single,
+	showspaces=false,		% don't show spaces
+	showstringspaces=false,	% don't show spaces in strings
+	showtabs=false,			% don't show tabs
+	tabsize=2				% tight indent
+}
+% mdframed
+\surroundwithmdframed[align=center,innerleftmargin=7pt,innerrightmargin=7pt]{BVerbatim}
+
+%%%% Packages that need to be loaded later
+\usepackage{hyperref} % documentation says last
+\hypersetup{
+	colorlinks,
+	linkcolor={green!80!black},
+	citecolor={red!70!black},
+	urlcolor={blue!70!black}
+}
+\usepackage[capitalize,noabbrev,sort]{cleveref} % load "mostly last"
+% use Oxford comma with cref lists
+\newcommand{\creflastconjunction}{, and\nobreakspace}
+
+%%%% use subfiles for separate sections
+\usepackage{subfiles} % must be last usepackage
+
+% fix graphicx for subfiles
+\graphicspath{{\subfix{./img}}}
+
+% try harder to avoid overfull
+\emergencystretch=1em
+
+% Title Page
+\title{Dissertation Title}
+\author{Awesome Grad Student}
+\prog{Graduate Program in Computer Science}
+\degree{Doctor of Philosophy}
+\thesisyear{2025}
+\monthname{April}
+\hypersetup{pdfinfo={Title={\thetitle},Author={\theauthor}}}
+
+\begin{document}
+
+\frontmatter
+
+\subfile{titlepage}
+
+\subfile{frontmatter}
+
+\mainmatter
+\glsresetall % reset all first use flags if used in frontmatter
+
+\subfile{introduction}
+\subfile{background}
+\subfile{methodology}
+\subfile{results}
+\subfile{discussion}
+\subfile{conclusions}
+
+%\backmatter
+\subfile{backmatter}
+
+\appendix
+\subfile{appendix}
+
+\end{document}
